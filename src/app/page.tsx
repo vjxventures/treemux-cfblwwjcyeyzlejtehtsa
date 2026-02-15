@@ -31,6 +31,28 @@ export default function Home() {
 
   const languages = ['typescript', 'javascript', 'python', 'go', 'rust', 'java', 'cpp', 'ruby'];
 
+  const examples = {
+    typescript: `async function fetchUserData(userId: string) {
+  const response = await fetch('https://api.example.com/users/' + userId);
+  const data = await response.json();
+  return data;
+}`,
+    python: `def calculate_average(numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    return total / len(numbers)`,
+    javascript: `function validateEmail(email) {
+  const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+  return re.test(email);
+}`,
+  };
+
+  const loadExample = (lang: keyof typeof examples) => {
+    setLanguage(lang);
+    setCode(examples[lang]);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Header */}
@@ -99,10 +121,36 @@ export default function Home() {
                 </select>
               </CardTitle>
               <CardDescription>
-                Paste the code you want reviewed
+                Paste the code you want reviewed or try an example
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div className="flex gap-2 flex-wrap">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => loadExample('typescript')}
+                  className="text-xs"
+                >
+                  Try TypeScript Example
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => loadExample('python')}
+                  className="text-xs"
+                >
+                  Try Python Example
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => loadExample('javascript')}
+                  className="text-xs"
+                >
+                  Try JavaScript Example
+                </Button>
+              </div>
               <Textarea
                 placeholder="// Paste your code here..."
                 value={code}
